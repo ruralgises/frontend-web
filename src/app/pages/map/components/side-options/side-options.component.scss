@@ -1,0 +1,23 @@
+#card{
+    height: 100%;
+}
+
+#car-map-input{
+    width: 100%;
+    padding: 5px;
+}
+
+::ng-deep#car-map-input .mat-mdc-form-field-subscript-wrapper{
+    display: none;
+}
+
+mat-card-header{
+    direction: rtl;
+    margin-bottom: 10px;
+}
+
+mat-card-footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}

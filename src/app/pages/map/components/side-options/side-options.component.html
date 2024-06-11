@@ -1,0 +1,12 @@
+<mat-card>
+    <form>
+        <mat-form-field id="car-map-input" color="accent">
+          <mat-label>CAR</mat-label>
+          <input type="text" matInput [formControl]="CARFormControl" placeholder="Ex. ES-XXXXXXX-XXXXXXX...">
+        </mat-form-field>
+      </form>
+    <mat-selection-list [multiple]="false" [hideSingleSelectionIndicator]="true">
+        <mat-list-option>ES-3201308-E503A6FB7D9A4274AB2571218CD79416</mat-list-option>
+        <mat-list-option>ES-3201308-E503A6FB7D9A4274AB2571218CD79416</mat-list-option>
+    </mat-selection-list>
+</mat-card>
