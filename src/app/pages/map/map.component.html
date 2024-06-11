@@ -1,1 +1,5 @@
 <app-map-view />
+
+@if(sideOptionsIsOpen()){
+  <app-information-guide class="over-map"  (toClosed)="sideOptionsIsOpen.set(false)"/>
+}
