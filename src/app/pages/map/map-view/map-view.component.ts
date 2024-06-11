@@ -20,6 +20,7 @@ export class MapViewComponent implements OnInit, AfterViewInit {
     proj4.defs('EPSG:4674', '+proj=longlat +datum=SIRGAS2000 +no_defs');
     register(proj4);
   }
+
   ngAfterViewInit(): void {
     this.map = new Map({
       view: new View({ center: [0, 0], zoom: 3, projection: 'EPSG:4674' }),

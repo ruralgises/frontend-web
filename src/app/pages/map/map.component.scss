@@ -1,0 +1,27 @@
+.over-map{
+    position: absolute;
+    z-index: 1000;
+}
+
+app-information-menu{
+    top: 0;
+    right: 0;
+    width: 30vw;
+    height: 95vh;
+    margin: 10px;
+}
+
+app-side-options{
+    top: 0;
+    left: 0;
+    width: 20vw;
+    max-height: 95vh;
+    margin: 10px;
+}
+
+mat-card{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 10px;
+}
