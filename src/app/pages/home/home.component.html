@@ -1,1 +1,36 @@
-<p>home works!</p>
+<h1 id="title">
+  Sistema Monitoramento do Desmatamento e Análise de Imóveis Rurais do Espírito
+  Santo
+</h1>
+
+<table>
+  <tr>
+    <td>
+      <form>
+        <mat-form-field class="fields-form">
+          <mat-label>CAR</mat-label>
+          <input id="input-car" type="text" matInput placeholder="Ex. DFBSDBTR98546DFVVA49AV" [matAutocomplete]="auto"/>
+          <mat-hint class="hint">Os CARs serão listados automáticamente</mat-hint>
+        </mat-form-field>
+        <mat-autocomplete #auto="matAutocomplete">
+          @for (option of filteredOptions; track option) {
+            <mat-option [value]="option">{{option}}</mat-option>
+          }
+        </mat-autocomplete>
+      </form>
+    </td>
+    <td>
+      <button id="button-download-car" mat-stroked-button>
+        Buscar
+      </button>
+    </td>
+  </tr>
+</table>
+
+<h4 id="option-plataform">
+  Caso não tenha o CAR, acesse a plataforma iterativa clicando no botão a baixo:
+</h4>
+
+<button mat-flat-button routerLink="/map" id="button-to-map">
+  <span>Ir para a plataforma <mat-icon>keyboard_double_arrow_right</mat-icon></span>
+</button>

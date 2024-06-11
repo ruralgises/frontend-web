@@ -1,0 +1,50 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+}
+
+#title {
+    color: #228b22;
+    margin-bottom: 2rem;
+    width: 60vw;
+}
+
+@media (prefers-color-scheme: light){
+  #title{
+    color: #006400;
+  }
+}
+
+#button-download-car{
+    height: 56px;
+    margin-bottom: 1.1rem;
+    margin-left: 0.5rem;
+}
+
+.fields-form {
+    width: 30vw;
+}
+
+.hint{
+    font-size: 0.8rem;
+}
+
+#option-plataform{
+    margin-top: 5rem;
+    font-weight: 400;
+}
+
+#button-to-map{
+    margin-top: 1rem;
+    height: 56px;
+    width: 20vw;
+}
+
+#button-to-map span{
+    display: flex;
+    align-items: center;
+}
