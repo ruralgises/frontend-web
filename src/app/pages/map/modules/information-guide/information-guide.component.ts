@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { DecriptionInformationComponent } from '../../components/description-information/decription-information.component';
+import { CarComponent } from './components/car/car.component';
 
 @Component({
   selector: 'app-information-guide',
@@ -15,6 +16,7 @@ import { DecriptionInformationComponent } from '../../components/description-inf
     MatButtonModule,
     MatDividerModule,
     AsyncPipe,
+    CarComponent,
     DecriptionInformationComponent
   ],
   templateUrl: './information-guide.component.html',
