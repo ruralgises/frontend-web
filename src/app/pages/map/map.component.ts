@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { MapViewComponent } from './components/map-view/map-view.component';
-import { InformationGuideComponent } from './components/information-guide/information-guide.component';
 import { SideOptionsComponent } from './components/side-options/side-options.component';
+import { InformationGuideComponent } from './modules/information-guide/information-guide.component';
 
 @Component({
   selector: 'app-map',

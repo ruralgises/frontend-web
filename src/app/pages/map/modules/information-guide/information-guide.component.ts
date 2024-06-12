@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { DecriptionInformationComponent } from '../../components/description-information/decription-information.component';
 
 @Component({
   selector: 'app-information-guide',
@@ -13,7 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
-    AsyncPipe
+    AsyncPipe,
+    DecriptionInformationComponent
   ],
   templateUrl: './information-guide.component.html',
   styleUrl: './information-guide.component.scss',

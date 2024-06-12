@@ -5,6 +5,7 @@ import OSM from 'ol/source/OSM';
 import TileWMS from 'ol/source/TileWMS';
 import proj4 from 'proj4';
 import { register } from 'ol/proj/proj4';
+import { defaults as defaultControls } from 'ol/control';
 
 @Component({
   selector: 'app-map-view',
@@ -38,6 +39,9 @@ export class MapViewComponent implements OnInit, AfterViewInit {
         }),
       ],
       target: 'map',
+      controls: defaultControls({
+        zoom: false,
+      }),
     });
   }
 }
