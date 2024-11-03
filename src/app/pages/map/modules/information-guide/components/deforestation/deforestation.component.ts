@@ -1,17 +1,16 @@
-import { NgIf } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { SectionDividerComponent } from "../section-divider/section-divider.component";
+import { SectionTitleComponent } from "../section-title/section-title.component";
 import Plotly, { Data } from 'plotly.js-dist-min';
 
 @Component({
-  selector: 'app-decription-information',
+  selector: 'app-deforestation',
   standalone: true,
-  imports: [MatDividerModule, NgIf, MatExpansionModule],
-  templateUrl: './decription-information.component.html',
-  styleUrl: './decription-information.component.scss',
+  imports: [SectionDividerComponent, SectionTitleComponent],
+  templateUrl: './deforestation.component.html',
+  styleUrl: './deforestation.component.scss',
 })
-export class DecriptionInformationComponent implements OnInit, AfterViewInit {
+export class DeforestationComponent implements OnInit, AfterViewInit {
   public graphPie = {
     data: [
       {
@@ -63,12 +62,12 @@ export class DecriptionInformationComponent implements OnInit, AfterViewInit {
       .matchMedia('(prefers-color-scheme: light)')
       .addEventListener('change', (event) => {
         if (event.matches) {
-          this.graphBar.layout.font.color = 'black'
-        }else{
+          this.graphBar.layout.font.color = 'black';
+        } else {
           this.graphBar.layout.font.color = 'white';
         }
 
-        Plotly.redraw('grafico-bar')
+        Plotly.redraw('grafico-bar');
       });
   }
 }

@@ -7,20 +7,32 @@
   <tr>
     <td>
       <form>
-        <mat-form-field class="fields-form">
-          <mat-label>CAR</mat-label>
-          <input id="input-car" type="text" matInput placeholder="Ex. DFBSDBTR98546DFVVA49AV" [matAutocomplete]="auto"/>
-          <mat-hint class="hint">Os CARs serão listados automáticamente</mat-hint>
-        </mat-form-field>
-        <mat-autocomplete #auto="matAutocomplete">
-          @for (option of filteredOptions; track option) {
-            <mat-option [value]="option">{{option}}</mat-option>
-          }
-        </mat-autocomplete>
+        <table>
+          <td>
+            <mat-form-field class="fields-form" id="prefix-label">
+              <mat-label>Estado</mat-label>
+              <input matInput disabled value="ES-" placeholder="Prefixo"/>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="fields-form">
+              <mat-label>CAR</mat-label>
+              <input
+                id="input-car"
+                type="text"
+                matInput
+                placeholder="Número CAR"
+                [formControl]="CAR"
+                [dropSpecialCharacters]="false"
+                mask="0000000-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+              />
+            </mat-form-field>
+          </td>
+        </table>
       </form>
     </td>
     <td>
-      <button id="button-download-car" mat-stroked-button>
+      <button id="button-download-car" mat-stroked-button (click)="downloadPDF()">
         Buscar
       </button>
     </td>
@@ -28,7 +40,7 @@
 </table>
 
 <h4 id="option-plataform">
-  Caso não tenha o CAR, acesse a plataforma iterativa clicando no botão a baixo:
+  Caso não tenha o número do CAR, acesse a plataforma iterativa clicando no botão a baixo:
 </h4>
 
 <button mat-flat-button routerLink="/map" id="button-to-map">
