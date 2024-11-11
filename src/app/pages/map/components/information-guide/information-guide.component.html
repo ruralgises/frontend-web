@@ -1,8 +1,7 @@
 <ng-container class="height-100">
   <mat-card class="height-100">
     <mat-card-header>
-      <button mat-icon-button
-      (click)="toClosed.emit()">
+      <button mat-icon-button (click)="toClosed.emit()">
         <mat-icon
           aria-hidden="false"
           aria-label="botão para fechar o card de opções"
@@ -13,6 +12,10 @@
 
     <mat-divider></mat-divider>
 
+    <!-- @if(isLoading$ | async; as a){ -->
+    @if(true){
+    <mat-spinner></mat-spinner>
+    }@else {
     <mat-card-content>
       <app-car car="ES-3201308-E503A6FB7D9A4274AB2571218CD79416"></app-car>
       <app-location></app-location>
@@ -26,8 +29,9 @@
     <mat-card-footer>
       <mat-divider></mat-divider>
       <mat-card-actions>
-          <button mat-raised-button color="accent">Baixar relatório</button>
+        <button mat-raised-button color="accent">Baixar relatório</button>
       </mat-card-actions>
     </mat-card-footer>
+    }
   </mat-card>
 </ng-container>

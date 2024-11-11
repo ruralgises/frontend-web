@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { RuralProperty } from '../../models/rural-gis-reponse/RuralProperty';
-import { environment } from '../../../../environments/environment';
+import { RuralProperty } from '../models/rural-gis-reponse/RuralProperty';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { MesageService } from '../../../shared/services/mesage.service';
+import { MesageService } from '../../shared/services/mesage.service';
 
 @Injectable({
   providedIn: 'root',
