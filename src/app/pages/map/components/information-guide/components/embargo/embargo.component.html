@@ -1,55 +1,40 @@
-<h4>Embargos</h4>
-
+<app-section-title
+  [title]="
+    'Embargos' +
+    ' - ' +
+    ruralProperty()?.embargoes?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.embargoes?.informationDatabase?.lastUpdate
+  "
+/>
+@for (item of ruralProperty()?.embargoes?.values; track $index) {
 <mat-accordion>
   <mat-expansion-panel>
-    <mat-expansion-panel-header class="expansionHeader">
-      <p>Data: 09/05/2012</p>
-      <p>Nome: Heflain da Rocha Mendes</p>
+    <mat-expansion-panel-header>
+      <p>
+        Data: {{ item.embargoIssuanceDate }}<br />
+        Nome: {{ item.nameEmbargoed }}
+      </p>
     </mat-expansion-panel-header>
-    <p>CPF: 123.456.789-00</p>
-    <p>Área: 10,00 ha</p>
-    <p>Processo: 123456789</p>
-    <p>
-      Descrição: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-      fugit tempore, laboriosam eum eligendi et mollitia ipsa, labore voluptate
-      nemo quam impedit, placeat consequuntur fuga reiciendis voluptatibus
-      officia perspiciatis corrupti!
-    </p>
-    <p>
-      Legislação: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-      fugit tempore, laboriosam eum eligendi et mollitia ipsa, labore voluptate
-      nemo quam impedit
-    </p>
-    <p>
-      Artigo: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-      fugit tempore, laboriosam eum eligendi et mollitia ipsa, labore voluptate
-      nemo quam impedit
-    </p>
-  </mat-expansion-panel>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header class="expansionHeader">
-      <p>Data: 09/05/2012</p>
-      <p>Nome: Heflain da Rocha Mendes</p>
-    </mat-expansion-panel-header>
-    <p>CPF: 123.456.789-00</p>
-    <p>Área: 10,00 ha</p>
-    <p>Processo: 123456789</p>
-    <p>
-      Descrição: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-      fugit tempore, laboriosam eum eligendi et mollitia ipsa, labore voluptate
-      nemo quam impedit, placeat consequuntur fuga reiciendis voluptatibus
-      officia perspiciatis corrupti!
-    </p>
-    <p>
-      Legislação: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-      fugit tempore, laboriosam eum eligendi et mollitia ipsa, labore voluptate
-      nemo quam impedit
-    </p>
-    <p>
-      Artigo: Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-      fugit tempore, laboriosam eum eligendi et mollitia ipsa, labore voluptate
-      nemo quam impedit
-    </p>
+    <p>Identificação: {{item.identificationEmbargoTerm}}</p>
+    <p>CPF: {{ item.cpfCnpj }}</p>
+    <p>Área: {{ item.areaIntersectHa }} ha</p>
+    <p>Processo: {{ item.administrativeProcessNumber }}</p>
+    <p>Descrição: {{ item.infractionDescription }}</p>
+    <p>Legislação: {{ item.legislation }}</p>
+    <p>Artigo: {{ item.article }}</p>
+    <p>Status: {{item.status}}</p>
+
+    <p>Área de intersessão: {{ item.areaIntersectHa }}</p>
+    <p>% Área de intersessão: {{ item.percentageOfThePropertyArea }}</p>
   </mat-expansion-panel>
 </mat-accordion>
-<div class="margin-bottom-1rem"></div>
+} @empty {
+<p class="center">
+  Não há intersessão com os dados do
+  {{ ruralProperty()?.embargoes?.informationDatabase?.databaseName }}
+</p>
+}
+<app-section-divider />

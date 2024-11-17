@@ -1,17 +1,17 @@
-import { AfterViewInit, Component, input, OnInit, signal } from '@angular/core';
-import { SectionDividerComponent } from '../section-divider/section-divider.component';
-import { SectionTitleComponent } from '../section-title/section-title.component';
+import { Component, input, OnInit, signal } from '@angular/core';
 import Plotly, { Data } from 'plotly.js-dist-min';
 import { RuralProperty } from '../../../../../../core/models/rural-gis-reponse/RuralProperty';
+import { SectionTitleComponent } from "../section-title/section-title.component";
+import { SectionDividerComponent } from "../section-divider/section-divider.component";
 
 @Component({
-  selector: 'app-deforestation',
+  selector: 'app-alert',
   standalone: true,
-  imports: [SectionDividerComponent, SectionTitleComponent],
-  templateUrl: './deforestation.component.html',
-  styleUrl: './deforestation.component.scss',
+  imports: [SectionTitleComponent, SectionDividerComponent],
+  templateUrl: './alert.component.html',
+  styleUrl: './alert.component.scss',
 })
-export class DeforestationComponent implements OnInit, AfterViewInit {
+export class AlertComponent implements OnInit {
   ruralProperty = input.required<RuralProperty | null>();
   mesageLarge = signal<boolean>(false);
   showgraphBar = signal<boolean>(false);
@@ -19,19 +19,18 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
   public graphBar: any;
 
   ngOnInit(): void {
+    console.log(this.ruralProperty()?.alert?.values);
     this.graphPie = {
       data: [
         {
           values: [
-            this.ruralProperty()?.deforestations
-              ?.percentageOfThePropertyAreaTotal,
+            this.ruralProperty()?.alert?.percentageOfThePropertyAreaTotal,
             100 -
-              this.ruralProperty()?.deforestations
-                ?.percentageOfThePropertyAreaTotal!,
+              this.ruralProperty()?.alert?.percentageOfThePropertyAreaTotal!,
           ],
-          labels: ['Desmatameto', 'Livre de Desmatamento'],
+          labels: ['Alertas', 'Livre de alertas'],
           type: 'pie',
-          marker: { colors: ['red', 'green'] },
+          marker: { colors: ['orange', 'green'] },
           textinfo: 'percent',
           textposition: 'auto',
           automargin: true,
@@ -51,13 +50,13 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
       },
     };
 
-    const arrConcated = this.ruralProperty()?.deforestations?.values.reduce(
+    const arrConcated = this.ruralProperty()?.alert?.values.reduce(
       (acc, item) => {
-        if (!acc[item.year]) {
-          acc[item.year] = 0;
+        if (!acc[item.detectYear]) {
+          acc[item.detectYear] = 0;
         }
 
-        acc[item.year] += item.areaIntersectHa;
+        acc[item.detectYear] += item.areaIntersectHa;
 
         return acc;
       },
@@ -72,11 +71,11 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
       areas.push(value);
     });
 
-    if(years.length >= 10){
+    if (years.length >= 10) {
       this.mesageLarge.set(true);
     }
 
-    if(years.length > 0){
+    if (years.length > 0) {
       this.graphBar = {
         data: [
           {
@@ -84,7 +83,7 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
             y: areas,
             type: 'bar',
             mode: 'markers',
-            marker: { color: 'red' },
+            marker: { color: 'orange' },
             width: 0.2,
           },
         ] as Data[],
@@ -109,16 +108,21 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private filterYears(years: string[]){
-    if(years.length > 5){
+  private filterYears(years: string[]) {
+    if (years.length > 5) {
       const firstElement = years[0];
       const middleLeftElement = years[Math.floor(years.length / 4)];
       const middleElement = years[Math.floor(years.length / 2)];
       const middleRightElement = years[Math.floor((years.length / 4) * 3)];
       const lastElement = years[years.length - 1];
 
-
-      return [firstElement, middleLeftElement, middleElement, middleRightElement,  lastElement];
+      return [
+        firstElement,
+        middleLeftElement,
+        middleElement,
+        middleRightElement,
+        lastElement,
+      ];
     }
 
     return years;
@@ -126,14 +130,14 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     Plotly.newPlot(
-      'grafico-pie-deforestation',
+      'grafico-pie-alert',
       this.graphPie.data,
       this.graphPie.layout,
       this.graphPie.config
     );
 
     Plotly.newPlot(
-      'grafico-bar-deforestation',
+      'grafico-bar-alert',
       this.graphBar.data,
       this.graphBar.layout,
       this.graphBar.config
@@ -148,7 +152,7 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
           this.graphBar.layout.font.color = 'white';
         }
 
-        Plotly.redraw('grafico-bar-deforestation');
+        Plotly.redraw('grafico-bar-alert');
       });
   }
 }

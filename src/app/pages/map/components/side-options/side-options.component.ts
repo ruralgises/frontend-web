@@ -78,12 +78,9 @@ export class SideOptionsComponent implements OnInit, OnDestroy {
       });
   }
 
-  selectedItem(event: MatSelectionListChange){
-      const selectedItems : RuralPropertyMinimum[] = event.source.selectedOptions.selected.map(
-        (option) => option.value
-      );
-      this.CARFormControl.setValue(selectedItems[0].code, {emitEvent: false});
-      this.cARSelectedStateService.update(selectedItems[0]);
+  selectedItem(selectedItems: RuralPropertyMinimum) {
+    this.CARFormControl.setValue(selectedItems.code, { emitEvent: false });
+    this.cARSelectedStateService.update(selectedItems);
   }
 
   ngOnDestroy(): void {

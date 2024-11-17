@@ -10,10 +10,10 @@
       />
     </mat-form-field>
   </form>
-  <mat-selection-list #CARList (selectionChange)="selectedItem($event)" [multiple]="false" [hideSingleSelectionIndicator]="true">
+  <mat-selection-list #CARList [multiple]="false" [hideSingleSelectionIndicator]="true">
     @if (listRuralPropertiesMinimumService.listRuralProperties$ | async; as geoSpatialInformation) {
       @for (item of geoSpatialInformation.values; track $index) {
-        <mat-list-option [value]="item"
+        <mat-list-option [value]="item" (click)="selectedItem(item)"
           >{{item.code}}</mat-list-option
         >
     } }

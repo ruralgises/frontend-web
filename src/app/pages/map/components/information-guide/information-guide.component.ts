@@ -23,6 +23,9 @@ import { CARSelectedStateService } from '../../../../shared/services/car-selecte
 import { ListRuralPropertiesMinimumService } from '../../../../shared/services/list-rural-properties-minimum.service';
 import { AsyncPipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UseCoverageComponent } from "./components/use-coverage/use-coverage.component";
+import { AlertComponent } from "./components/alert/alert.component";
+import { RuralPropertyService } from '../../../../core/services/rural-property.service';
 
 @Component({
   selector: 'app-information-guide',
@@ -40,7 +43,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     SettlementComponent,
     DeforestationComponent,
     EmbargoComponent,
-    AsyncPipe
+    AsyncPipe,
+    UseCoverageComponent,
+    AlertComponent,
   ],
   templateUrl: './information-guide.component.html',
   styleUrl: './information-guide.component.scss',
@@ -48,15 +53,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class InformationGuideComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
+  private _isLoading = new BehaviorSubject<boolean>(true);
   private _listRuralPropertiesMinimumService = inject(
     ListRuralPropertiesMinimumService
   );
   private _cARSelectedStateService = inject(CARSelectedStateService);
+  private _ruralPropertyService = inject(RuralPropertyService);
 
   toClosed = output();
   ruralProperty: RuralProperty | null = null;
-  private _isLoading = new BehaviorSubject<boolean>(true);
-
   isLoading$ = this._isLoading.asObservable();
 
   ngOnInit(): void {
@@ -79,6 +84,13 @@ export class InformationGuideComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  downloadPdf() {
+    if(this.ruralProperty?.code){
+      this._ruralPropertyService.downloadPdf(this.ruralProperty?.code);
+    }
+  }
+
 
   ngOnDestroy(): void {
     this._unsubscribe$.next();

@@ -1,0 +1,15 @@
+<app-section-title
+  [title]="
+    'Uso e cobertura da terra' +
+    ' - ' +
+    ruralProperty()?.useCoverage?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.useCoverage?.informationDatabase?.lastUpdate
+  "
+/>
+
+<div class="center-graph" id="grafico-pie-use-coverage"></div>
+<div class="margin-bottom-1rem"></div>
+<app-section-divider />

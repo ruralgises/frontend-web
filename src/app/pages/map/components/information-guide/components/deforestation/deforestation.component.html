@@ -1,7 +1,35 @@
-<app-section-title>Supressão total da vegetação nativa</app-section-title>
-<div class="desmatamento" id="grafico-pie"></div>
+<app-section-title
+  [title]="
+    'Supressão total da vegetação nativa' +
+    ' - ' +
+    ruralProperty()?.deforestations?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.deforestations?.informationDatabase?.lastUpdate
+  "
+/>
+
+<div class="center-graph" id="grafico-pie-deforestation"></div>
 <app-section-divider />
 
-<app-section-title> Registros da supressão da vegetação nativa </app-section-title>
-<div class="desmatamento" id="grafico-bar"></div>
+@if(showgraphBar()){
+<app-section-title
+  [title]="
+    'Supressão anual da vegetação nativa(ha)' +
+    ' - ' +
+    ruralProperty()?.deforestations?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.deforestations?.informationDatabase?.lastUpdate
+  "
+/>
+
+<div class="center-graph" id="grafico-bar-deforestation"></div>
+@if(mesageLarge()){
+  <p id="msg-muitas-barras">mova o gráfico para os lado, para visualizar barras que podem estar ocultas</p>
+}
 <app-section-divider />
+}
+

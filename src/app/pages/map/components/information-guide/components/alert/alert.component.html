@@ -1,0 +1,35 @@
+<app-section-title
+  [title]="
+    'Alertas totais' +
+    ' - ' +
+    ruralProperty()?.alert?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.alert?.informationDatabase?.lastUpdate
+  "
+/>
+
+<div class="center-graph" id="grafico-pie-alert"></div>
+<app-section-divider />
+
+@if(showgraphBar()){
+<app-section-title
+  [title]="
+    'Alertas anuais' +
+    ' - ' +
+    ruralProperty()?.alert?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.alert?.informationDatabase?.lastUpdate
+  "
+/>
+
+<div class="center-graph" id="grafico-bar-alert"></div>
+@if(mesageLarge()){
+  <p id="msg-muitas-barras">mova o gráfico para os lado, para visualizar barras que podem estar ocultas</p>
+}
+<app-section-divider />
+}
+

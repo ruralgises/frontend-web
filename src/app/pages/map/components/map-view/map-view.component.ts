@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   inject,
-  input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -139,8 +138,12 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
           });
           this.map?.addLayer(vectorLayer);
 
-          const extent = vectorLayer.getExtent();
-
+          const extent = vectorSource.getExtent();
+          if (extent) {
+            this.map?.getView().fit(extent, {
+              padding: [30, 120, 30, 30],  // Opcional: Adiciona padding para que não fique colado nas bordas
+            });
+          }
           this._latestLayerSelected = vectorLayer;
         }
       }

@@ -1,8 +1,35 @@
-<app-section-title>Assentamento</app-section-title>
-<p>Código SIPRA: ES0086000</p>
-<p>Nome: Assentamento Rural São João</p>
-<p>Número da fámilia: 100</p>
-<p>Data criação: 05/06/2018</p>
-<p>Forma de obtenção: Desapropriação</p>
-<p>Data obtenção: 08/10/2020</p>
+<!-- <app-section-title>Assentamento</app-section-title> -->
+<app-section-title
+  [title]="
+    'Assentamento' +
+    ' - ' +
+    ruralProperty()?.settlements?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.settlements?.informationDatabase?.lastUpdate
+  "
+/>
+
+@for (item of ruralProperty()?.settlements?.values; track $index) {
+<mat-accordion>
+  <mat-expansion-panel class="max-height-150-px">
+    <mat-expansion-panel-header class="max-height-150-px">
+      <p>{{ item.nameProject }}</p>
+    </mat-expansion-panel-header>
+    <p>Código SIPRA: {{item.codeSIPRA}}</p>
+    <p>Número da fámilia: {{item.familyNumber}}</p>
+    <p>Data criação: {{item.creationDate}}</p>
+    <p>Forma de obtenção: {{item.wayObtaining}}</p>
+    <p>Data obtenção: {{item.dateObtaining}}</p>
+    <p>Área de intersessão: {{ item.areaIntersectHa }}</p>
+    <p>% Área de intersessão: {{ item.percentageOfThePropertyArea }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+} @empty {
+<p class="center">
+  Não há intersessão com os dados do
+  {{ ruralProperty()?.settlements?.informationDatabase?.databaseName }}
+</p>
+}
 <app-section-divider />

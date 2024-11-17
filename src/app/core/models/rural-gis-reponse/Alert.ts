@@ -6,4 +6,5 @@ export interface Alert extends GeoSpatialBaseIntersection {
   publicationDate: string; // DateOnly in C# can be represented as a string in ISO format in TypeScript
   vectorPressure: string;
   font: string;
+  detectYear: number;
 }

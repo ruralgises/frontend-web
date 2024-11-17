@@ -1,8 +1,35 @@
-<app-section-title>Terra Indígena</app-section-title>
-<p>Nome: Reserva indígena Tupiniquim</p>
-<p>Etnia: Tupiniquim</p>
-<p>Modalidade: Tradicional</p>
-<p>Fase: Regularizada</p>
-<p>Nome unidade adm: COORDENACAO REGIONAL NOROESTE DO MATO GROSSO</p>
-<p>Sigla unidade adm: CR-NOMT</p>
+<!-- <app-section-title>Terras Indígenas</app-section-title> -->
+<app-section-title
+  [title]="
+    'Terras Indígenas' +
+    ' - ' +
+    ruralProperty()?.indigenousland?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.indigenousland?.informationDatabase?.lastUpdate
+  "
+/>
+
+@for (item of ruralProperty()?.indigenousland?.values; track $index) {
+<mat-accordion>
+  <mat-expansion-panel class="max-height-150-px">
+    <mat-expansion-panel-header class="max-height-150-px">
+      <p>{{ item.adminUnitName }}</p>
+    </mat-expansion-panel-header>
+    <p>Etnia: {{item.ethnicityName}}</p>
+    <p>Modalidade: {{item.modality}}</p>
+    <p>Fase: {{item.indigenousLandCreationPhase}}</p>
+    <p>Nome unidade adm: {{item.adminUnitName}}</p>
+    <p>Sigla unidade adm: {{item.adminUnitAcronym}}</p>
+    <p>Área de intersessão: {{ item.areaIntersectHa }}</p>
+    <p>% Área de intersessão: {{ item.percentageOfThePropertyArea }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+} @empty {
+<p class="center">
+  Não há intersessão com os dados do
+  {{ ruralProperty()?.indigenousland?.informationDatabase?.databaseName }}
+</p>
+}
 <app-section-divider />

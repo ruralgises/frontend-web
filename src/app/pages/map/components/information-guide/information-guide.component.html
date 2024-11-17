@@ -12,24 +12,27 @@
 
     <mat-divider></mat-divider>
 
-    <!-- @if(isLoading$ | async; as a){ -->
-    @if(true){
-    <mat-spinner></mat-spinner>
+    @if(isLoading$ | async; as a){
+    <div class="container">
+      <mat-spinner></mat-spinner>
+    </div>
     }@else {
     <mat-card-content>
-      <app-car car="ES-3201308-E503A6FB7D9A4274AB2571218CD79416"></app-car>
-      <app-location></app-location>
-      <app-conservation-unit></app-conservation-unit>
-      <app-indigenous-lands></app-indigenous-lands>
-      <app-settlement></app-settlement>
-      <app-deforestation></app-deforestation>
-      <app-embargo></app-embargo>
+      <app-car [ruralProperty]='ruralProperty'></app-car>
+      <app-location [ruralProperty]='ruralProperty'></app-location>
+      <app-conservation-unit [ruralProperty]='ruralProperty'></app-conservation-unit>
+      <app-indigenous-lands [ruralProperty]='ruralProperty'></app-indigenous-lands>
+      <app-settlement [ruralProperty]='ruralProperty'></app-settlement>
+      <app-alert [ruralProperty]='ruralProperty'></app-alert>
+      <app-deforestation [ruralProperty]='ruralProperty'></app-deforestation>
+      <app-embargo [ruralProperty]='ruralProperty'></app-embargo>
+      <app-use-coverage [ruralProperty]='ruralProperty'></app-use-coverage>
     </mat-card-content>
 
     <mat-card-footer>
       <mat-divider></mat-divider>
       <mat-card-actions>
-        <button mat-raised-button color="accent">Baixar relatório</button>
+        <button mat-raised-button (click)="downloadPdf()" color="accent">Baixar relatório</button>
       </mat-card-actions>
     </mat-card-footer>
     }

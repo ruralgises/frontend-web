@@ -1,5 +1,24 @@
-<h4>Localização</h4>
-<p>Município: Marataízes</p>
-<p>Microrregião: Litoral Sul</p>
-<p>Mesorregião: Sul Espírito-Santense</p>
+<app-section-title
+  [title]="
+    'Localização' +
+    ' - ' +
+    ruralProperty()?.location?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.location?.informationDatabase?.lastUpdate
+  "
+/>
+<p>
+  Município: {{ ruralProperty()?.location?.municipality?.code ?? "" }} -
+  {{ ruralProperty()?.location?.municipality?.name ?? "" }}
+</p>
+<p>
+  Microrregião: {{ ruralProperty()?.location?.microregion?.code ?? "" }} -
+  {{ ruralProperty()?.location?.microregion?.name ?? "" }}
+</p>
+<p>
+  Mesorregião: {{ ruralProperty()?.location?.messoregion?.code ?? "" }} -
+  {{ ruralProperty()?.location?.messoregion?.name ?? "" }}
+</p>
 <app-section-divider></app-section-divider>

@@ -8,6 +8,7 @@ import { InformationDatabase } from "./InformationDatabase";
 import { QuilombolaArea } from "./QuilombolaArea";
 import { Settlement } from "./Settlement";
 import { UseCoverage } from "./UseCoverage";
+import { Location } from "./Location";
 
 export interface RuralProperty {
   themeName: string;
@@ -17,7 +18,7 @@ export interface RuralProperty {
   type: string;
   condition: string;
   informationDatabase: InformationDatabase;
-  location?: Location; // Nullable property
+  location?: Location;
   conservationUnits?: GeoSpatialIntersectInformation<ConservationUnit>;
   deforestations?: GeoSpatialIntersectInformation<Deforestation>;
   embargoes?: GeoSpatialIntersectInformation<Embargo>;

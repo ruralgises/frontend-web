@@ -1,10 +1,36 @@
-<app-section-title>Unidade de conservação</app-section-title>
-<p>Nome: Reserva natura da vale</p>
-<p>Categoria: Reserva biológica</p>
-<p>Grupo: Proteção integral</p>
-<p>Esfera: Munícipal</p>
-<p>Ano criação: 2018</p>
-<p>Ato criação: Lei Munícipal nº 800.16-2018</p>
-<p>Código: 2018.63.2020</p>
-<p>Órgão de gestão: IEMA</p>
+<app-section-title
+  [title]="
+    'Unidade de conservação' +
+    ' - ' +
+    ruralProperty()?.conservationUnits?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.conservationUnits?.informationDatabase?.lastUpdate
+  "
+/>
+
+@for (item of ruralProperty()?.conservationUnits?.values; track $index) {
+<mat-accordion>
+  <mat-expansion-panel class="max-height-150-px">
+    <mat-expansion-panel-header class="max-height-150-px">
+      <p>{{ item.ucName }}</p>
+    </mat-expansion-panel-header>
+    <p>Categoria: {{ item.category }}</p>
+    <p>Grupo: {{ item.group }}</p>
+    <p>Esfera: {{ item.realm }}</p>
+    <p>Ano criação: {{ item.yearCreation }}</p>
+    <p>Ato criação: {{ item.actCreation }}</p>
+    <p>Código: {{ item.cnucCode }}</p>
+    <p>Órgão de gestão: {{ item.managingBody }}</p>
+    <p>Área de intersessão: {{ item.areaIntersectHa }}</p>
+    <p>% Área de intersessão: {{ item.percentageOfThePropertyArea }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+} @empty {
+<p class="center">
+  Não há intersessão com os dados do
+  {{ ruralProperty()?.conservationUnits?.informationDatabase?.databaseName }}
+</p>
+}
 <app-section-divider />

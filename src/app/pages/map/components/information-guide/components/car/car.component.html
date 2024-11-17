@@ -1,3 +1,17 @@
-<h4>CAR</h4>
-<p class="center">{{ car() }}</p>
+<app-section-title
+  [title]="
+    'CAR' +
+    ' - ' +
+    ruralProperty()?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.informationDatabase?.lastUpdate
+  "
+/>
+<p class="center margin-bottom-1rem">{{ ruralProperty()?.code }}</p>
+<p>Área(ha): {{ ruralProperty()?.areaHa }}</p>
+<p>Status: {{ status.get(ruralProperty()?.status ?? '') }}</p>
+<p>Tipo: {{ tipos.get(ruralProperty()?.type ?? '') }}</p>
+<p>Situação: {{ ruralProperty()?.condition }}</p>
 <app-section-divider />

@@ -4,6 +4,7 @@ export const environment = {
   zoomAte9: '',
   zoomDe9Ate15: '',
   zoomAPartir15: '',
+  legend: '',
   WMSVersion: '',
   WMSFormat: '',
 };

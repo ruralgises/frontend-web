@@ -1,13 +1,12 @@
 import { Component, input } from '@angular/core';
-import { SectionDataComponent } from '../section-data/section-data.component';
 import { SectionTitleComponent } from '../section-title/section-title.component';
 import { SectionDividerComponent } from '../section-divider/section-divider.component';
+import { RuralProperty } from '../../../../../../core/models/rural-gis-reponse/RuralProperty';
 
 @Component({
   selector: 'app-car',
   standalone: true,
   imports: [
-    SectionDataComponent,
     SectionTitleComponent,
     SectionDividerComponent
   ],
@@ -15,5 +14,18 @@ import { SectionDividerComponent } from '../section-divider/section-divider.comp
   styleUrl: './car.component.scss'
 })
 export class CarComponent {
-  car = input.required<string>()
+  ruralProperty = input.required<RuralProperty | null>()
+
+  tipos = new Map<string, string>([
+    ['IRU', 'Imóvel Rural'],
+    ['AST', 'Assentamentos de Reforma Agrária'],
+    ['PCT', 'Território Tradicional de Povos e Comunidades Tradicionais']
+  ]);
+
+  status = new Map<string, string>([
+    ['AT', 'Ativo'],
+    ['PE', 'Pendente'],
+    ['SU', 'Suspenso'],
+    ['CA', 'Cancelado']
+  ]);
 }
