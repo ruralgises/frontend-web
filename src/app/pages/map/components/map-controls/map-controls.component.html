@@ -1,1 +1,7 @@
-<app-lengend></app-lengend>
+@if(toCloseLegend()){
+  <app-lengend (toClosed)="toCloseLegend.set(false)"></app-lengend>
+} @else {
+  <button mat-mini-fab (click)="toCloseLegend.set(true)">
+    <mat-icon aria-label="Legenda" fontIcon="ballot"></mat-icon>
+  </button>
+}

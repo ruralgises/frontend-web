@@ -15,7 +15,7 @@
 
 mat-card-header {
     direction: rtl;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 mat-card-footer {
@@ -47,10 +47,10 @@ p {
 }
 
 mat-divider {
-    margin: 1em 0px;
+    margin: 0.5em 0px;
 }
 
-.center-graph {
+::ng-deep .center-graph {
     width: 100%;
     justify-content: center;
     display: flex;

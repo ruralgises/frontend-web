@@ -1,10 +1,17 @@
 <mat-card>
-  <mat-card-header>
+  <mat-card-header class="header-mat-card">
     <mat-card-title>Legenda</mat-card-title>
+    <button mat-icon-button (click)="toClosed.emit()">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="botão para fechar o card de legenda"
+        fontIcon="close"
+      ></mat-icon>
+    </button>
   </mat-card-header>
   <mat-card-content>
     @if(legend){
-      <img [src]="legend" alt="Legenda" />
+    <img [src]="legend" alt="Legenda" />
     }
   </mat-card-content>
 </mat-card>

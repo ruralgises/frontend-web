@@ -49,7 +49,7 @@ import { RuralPropertyService } from '../../../../core/services/rural-property.s
   ],
   templateUrl: './information-guide.component.html',
   styleUrl: './information-guide.component.scss',
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class InformationGuideComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();

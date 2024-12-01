@@ -1,14 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { LegendService } from '../../../../../core/services/legend.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-lengend',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule, MatIconModule, MatButtonModule],
   templateUrl: './lengend.component.html',
   styleUrl: './lengend.component.scss',
 })
 export class LengendComponent implements OnInit {
+  toClosed = output();
   private _legendService = inject(LegendService);
   legend: string = '';
 

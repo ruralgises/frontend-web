@@ -23,6 +23,7 @@ export class RuralPropertyService {
     if (skip !== undefined) {
       params = params.set('skip', skip.toString());
     }
+
     if (take !== undefined) {
       params = params.set('take', take.toString());
     }

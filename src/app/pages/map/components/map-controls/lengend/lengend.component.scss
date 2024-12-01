@@ -2,3 +2,16 @@ mat-card{
   height: 235px;
   min-width: 240px;
 }
+
+.header-mat-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#button-close{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 5px;
+}
