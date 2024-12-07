@@ -1,7 +1,7 @@
 .container{
   display: flex;
-  justify-content: center; /* Alinha horizontalmente */
-  align-items: center; /* Alinha verticalmente */
+  justify-content: center;
+  align-items: center;
   height: 100%;
 }
 
@@ -62,23 +62,5 @@ mat-divider {
 
 .margin-bottom-1rem{
   margin-bottom: 1rem;
-}
-
-/* Para navegadores Webkit (Chrome, Safari, Edge, Opera) */
-::-webkit-scrollbar {
-  width: 8px; /* Define a largura da barra de rolagem */
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Cor do trilho da barra de rolagem */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888; /* Cor da barra de rolagem */
-  border-radius: 10px; /* Deixa a barra mais arredondada */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Cor da barra de rolagem ao passar o mouse */
 }
 

@@ -21,3 +21,14 @@ mat-card-footer{
     position: absolute;
     bottom: 0;
 }
+
+$viewport-height: 100vh;
+$height-to-remove: 340px;
+
+// Calcula o valor restante em vh
+$remaining-height: calc(#{$viewport-height} - #{$height-to-remove});
+
+mat-selection-list{
+  max-height: $remaining-height;
+  overflow-y: auto;
+}

@@ -1,10 +1,15 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { RuralProperty } from '../models/rural-gis-reponse/RuralProperty';
 import { RuralPropertyMinimum } from '../models/rural-gis-reponse/RuralPropertyMinimum';
 import { GeoSpatialInformation } from '../models/rural-gis-reponse/GeoSpatialInformation';
+import { Geometry } from 'ol/geom';
+import GeoJSON from 'ol/format/GeoJSON';
+import { Geometry as Geom} from 'geojson';
+import { GetByGeometryRuralPropretiesMinimum } from '../models/rural-gis-request/GetByGeometryRuralPropretiesMinimum';
+import { J } from '@angular/cdk/keycodes';
 
 @Injectable({
   providedIn: 'root',
@@ -12,27 +17,31 @@ import { GeoSpatialInformation } from '../models/rural-gis-reponse/GeoSpatialInf
 export class RuralPropertyMinimumService {
   constructor(private http: HttpClient) {}
 
-  getByCoordinateRuralPropretiesMinimum(
-    x: number,
-    y: number,
+  private geojsonFormat = new GeoJSON();
+  private header = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  getByGeometryRuralPropretiesMinimum(
+    geometry: Geometry,
     skip?: number,
     take?: number
   ): Observable<GeoSpatialInformation<RuralPropertyMinimum>> {
     let params = new HttpParams();
-
-    params = params.set('Coordinate.X', x);
-    params = params.set('Coordinate.Y', y);
+    const request: GetByGeometryRuralPropretiesMinimum = {
+      geometry: JSON.parse(this.geojsonFormat.writeGeometry(geometry)) as Geom,
+    };
 
     if (skip !== undefined) {
-      params = params.set('skip', skip.toString());
+      request.skip = skip;
     }
     if (take !== undefined) {
-      params = params.set('take', take.toString());
+      request.take = take;
     }
 
-    return this.http.get<GeoSpatialInformation<RuralPropertyMinimum>>(
-      environment.baseUrl + 'RuralPropertiesMinimum/bycoordinate',
-      { params: params }
+    return this.http.post<GeoSpatialInformation<RuralPropertyMinimum>>(
+      environment.baseUrl + 'RuralPropertiesMinimum/bygeometry',
+      request,
+      { headers: this.header }
     );
   }
 

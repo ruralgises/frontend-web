@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UseCoverageComponent } from "./components/use-coverage/use-coverage.component";
 import { AlertComponent } from "./components/alert/alert.component";
 import { RuralPropertyService } from '../../../../core/services/rural-property.service';
+import { QuilombolaAreaComponent } from "./components/quilombola-area/quilombola-area.component";
 
 @Component({
   selector: 'app-information-guide',
@@ -46,7 +47,8 @@ import { RuralPropertyService } from '../../../../core/services/rural-property.s
     AsyncPipe,
     UseCoverageComponent,
     AlertComponent,
-  ],
+    QuilombolaAreaComponent
+],
   templateUrl: './information-guide.component.html',
   styleUrl: './information-guide.component.scss',
   encapsulation: ViewEncapsulation.Emulated,

@@ -16,6 +16,7 @@ import { GeoSpatialInformation } from '../../core/models/rural-gis-reponse/GeoSp
 import { Map, MapBrowserEvent } from 'ol';
 import { unByKey } from 'ol/Observable';
 import { WaysToConsultRuralProperty } from '../../core/enum/ways-to-consult-rural-property.enum';
+import { Point } from 'ol/geom';
 
 @Injectable()
 export class ListRuralPropertiesMinimumService {
@@ -32,8 +33,9 @@ export class ListRuralPropertiesMinimumService {
     const eventKey = map.on('click', (event: MapBrowserEvent<UIEvent>) => {
       this._consultationStarted.next(WaysToConsultRuralProperty.CLICK_MAP);
       const coord = event.coordinate;
+      const point = new Point(coord);
       this._ruralPropertyMinimumService
-        .getByCoordinateRuralPropretiesMinimum(coord[0], coord[1])
+        .getByGeometryRuralPropretiesMinimum(point)
         .subscribe((x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
           this._listRuralProperties.next(x);
         });

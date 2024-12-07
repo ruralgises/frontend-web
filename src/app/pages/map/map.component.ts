@@ -1,17 +1,33 @@
-import { Component, inject, LOCALE_ID, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  LOCALE_ID,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { MapViewComponent } from './components/map-view/map-view.component';
 import { SideOptionsComponent } from './components/side-options/side-options.component';
 import { ListRuralPropertiesMinimumService } from '../../shared/services/list-rural-properties-minimum.service';
 import { CARSelectedStateService } from '../../shared/services/car-selected-state.service';
 import { InformationGuideComponent } from './components/information-guide/information-guide.component';
 import { RuralProperty } from '../../core/models/rural-gis-reponse/RuralProperty';
-import { Subject, takeUntil } from 'rxjs';
-import { MapControlsComponent } from "./components/map-controls/map-controls.component";
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { MapControlsComponent } from './components/map-controls/map-controls.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [MapViewComponent, InformationGuideComponent, SideOptionsComponent, MapControlsComponent],
+  imports: [
+    MapViewComponent,
+    InformationGuideComponent,
+    SideOptionsComponent,
+    MapControlsComponent,
+    MatProgressBarModule,
+    AsyncPipe
+  ],
   providers: [
     ListRuralPropertiesMinimumService,
     CARSelectedStateService,
@@ -22,6 +38,9 @@ import { MapControlsComponent } from "./components/map-controls/map-controls.com
 })
 export class MapComponent implements OnInit, OnDestroy {
   private _unsubscribe$ = new Subject<void>();
+  showLoading = new BehaviorSubject<boolean>(false);
+  showLoading$ = this.showLoading.asObservable();
+
   private _listRuralPropertiesMinimumService = inject(
     ListRuralPropertiesMinimumService
   );
@@ -33,6 +52,7 @@ export class MapComponent implements OnInit, OnDestroy {
     this._cARSelectedStateService.consultationStarted$
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(() => {
+        this.showLoading.next(true);
         if (!this.sideOptionsIsOpen()) {
           this.sideOptionsIsOpen.set(true);
         }
@@ -41,8 +61,23 @@ export class MapComponent implements OnInit, OnDestroy {
     this._cARSelectedStateService.CAR$.pipe(
       takeUntil(this._unsubscribe$)
     ).subscribe((item) => {
+      if(item){
+        this.showLoading.next(false);
+      }
       this.CAR = item;
       this.sideOptionsIsOpen.set(!!item);
+    });
+
+    this._listRuralPropertiesMinimumService.consultationStarted$.pipe(
+      takeUntil(this._unsubscribe$)
+    ).subscribe(() => {
+      this.showLoading.next(true);
+    });
+
+    this._listRuralPropertiesMinimumService.listRuralProperties$.pipe(
+      takeUntil(this._unsubscribe$)
+    ).subscribe((item) => {
+      this.showLoading.next(false);
     });
   }
 

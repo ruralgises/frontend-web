@@ -1,0 +1,35 @@
+<app-section-title
+  [title]="
+    'Área de quilombolas' +
+    ' - ' +
+    ruralProperty()?.quilombolaAreas?.informationDatabase?.databaseName
+  "
+  [subTitle]="
+    'Ultima atualização: ' +
+    ruralProperty()?.quilombolaAreas?.informationDatabase?.lastUpdate
+  "
+/>
+
+@for (item of ruralProperty()?.quilombolaAreas?.values; track $index) {
+<mat-accordion>
+  <mat-expansion-panel class="max-height-150-px">
+    <mat-expansion-panel-header class="max-height-150-px">
+      <p>{{ item.communityName }}</p>
+    </mat-expansion-panel-header>
+    <p>Família: {{item.familyNumber}}</p>
+    <p>Comunidade: {{item.communityName}}</p>
+    <p>Processo: {{item.processNumber}}</p>
+    <p>Fase: {{item.phase}}</p>
+    <p>Esfera: {{item.realm}}</p>
+    <p>Responsável: {{item.responsible}}</p>
+    <p>Área de intersessão: {{ item.areaIntersectHa }}</p>
+    <p>% Área de intersessão: {{ item.percentageOfThePropertyArea }}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+} @empty {
+<p class="center">
+  Não há intersessão com os dados do
+  {{ ruralProperty()?.quilombolaAreas?.informationDatabase?.databaseName }}
+</p>
+}
+<app-section-divider />
