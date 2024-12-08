@@ -88,6 +88,3 @@ export class SideOptionsComponent implements OnInit, OnDestroy {
     this._unsubscribe$.complete();
   }
 }
-function item(value: WaysToConsultRuralProperty): void {
-  throw new Error('Function not implemented.');
-}

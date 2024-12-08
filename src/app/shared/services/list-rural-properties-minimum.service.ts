@@ -12,11 +12,13 @@ import { unByKey } from 'ol/Observable';
 import { WaysToConsultRuralProperty } from '../../core/enum/ways-to-consult-rural-property.enum';
 import { Geometry, Point } from 'ol/geom';
 import { MapStateService } from './map-state.service';
+import { MesageService } from './mesage.service';
 
 @Injectable()
 export class ListRuralPropertiesMinimumService {
   private _ruralPropertyMinimumService = inject(RuralPropertyMinimumService);
   private _mapSingletonService = inject(MapStateService);
+  private _msgService = inject(MesageService);
   private _listRuralProperties =
     new Subject<GeoSpatialInformation<RuralPropertyMinimum> | null>();
 
@@ -35,11 +37,15 @@ export class ListRuralPropertiesMinimumService {
           const point = new Point(coord);
           this._ruralPropertyMinimumService
             .getByGeometryRuralPropretiesMinimum(point)
-            .subscribe(
-              (x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
+            .subscribe({
+              next: (x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
                 this._listRuralProperties.next(x);
-              }
-            );
+              },
+              error: () => {
+                this._listRuralProperties.next(null);
+                this._msgService.openSnackBar('Erro ao consultar as propriedades rurais');
+              },
+            });
         }else{
           skip--;
         }
@@ -57,8 +63,14 @@ export class ListRuralPropertiesMinimumService {
     this._consultationStarted.next(WaysToConsultRuralProperty.DRAW_POLYGON);
     this._ruralPropertyMinimumService
       .getByGeometryRuralPropretiesMinimum(geometry)
-      .subscribe((x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
-        this._listRuralProperties.next(x);
+      .subscribe({
+        next: (x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
+          this._listRuralProperties.next(x);
+        },
+        error: () => {
+          this._listRuralProperties.next(null);
+          this._msgService.openSnackBar('Erro ao consultar as propriedades rurais');
+        }
       });
   }
 
@@ -79,13 +91,6 @@ export class ListRuralPropertiesMinimumService {
           }
           return this._ruralPropertyMinimumService
             .getByCodeRuralPropretiesMinimum(term)
-            .pipe(
-              catchError(() => {
-                return of<GeoSpatialInformation<RuralPropertyMinimum> | null>(
-                  null
-                );
-              })
-            );
         })
       )
       .subscribe({
@@ -94,6 +99,7 @@ export class ListRuralPropertiesMinimumService {
         },
         error: () => {
           this._listRuralProperties.next(null);
+          this._msgService.openSnackBar('Erro ao consultar as propriedades rurais');
         },
       });
   }
