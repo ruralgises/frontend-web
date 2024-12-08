@@ -16,6 +16,7 @@ import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { MapControlsComponent } from './components/map-controls/map-controls.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AsyncPipe } from '@angular/common';
+import { DrawInteractionComponent } from "./components/draw-interaction/draw-interaction.component";
 
 @Component({
   selector: 'app-map',
@@ -26,8 +27,9 @@ import { AsyncPipe } from '@angular/common';
     SideOptionsComponent,
     MapControlsComponent,
     MatProgressBarModule,
-    AsyncPipe
-  ],
+    AsyncPipe,
+    DrawInteractionComponent
+],
   providers: [
     ListRuralPropertiesMinimumService,
     CARSelectedStateService,
@@ -47,6 +49,11 @@ export class MapComponent implements OnInit, OnDestroy {
   private _cARSelectedStateService = inject(CARSelectedStateService);
   CAR: RuralProperty | null = null;
   sideOptionsIsOpen = signal(false);
+
+  closeSideOptions() {
+    this.sideOptionsIsOpen.set(false);
+    this._cARSelectedStateService.update(null)
+  }
 
   ngOnInit(): void {
     this._cARSelectedStateService.consultationStarted$

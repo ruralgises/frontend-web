@@ -23,6 +23,7 @@ import { GeoJSON } from 'ol/format';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 import Style from 'ol/style/Style';
+import { MapStateService } from '../../../../shared/services/map-state.service';
 
 @Component({
   selector: 'app-map-view',
@@ -34,10 +35,14 @@ import Style from 'ol/style/Style';
 export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
   private map?: Map;
   private _unsubscribe$ = new Subject<void>();
+  private _unsubscribeClick$ = new Subject<void>();
   private _latestLayerSelected: VectorLayer<Feature> | null = null;
 
-  private _listRuralPropertiesMinimumService = inject(ListRuralPropertiesMinimumService);
+  private _listRuralPropertiesMinimumService = inject(
+    ListRuralPropertiesMinimumService
+  );
   private _cARSelectedStateService = inject(CARSelectedStateService);
+  private _mapState = inject(MapStateService);
 
   ngOnInit(): void {
     proj4.defs('EPSG:4674', '+proj=longlat +datum=SIRGAS2000 +no_defs');
@@ -100,14 +105,26 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.map.getView().fit(ES_EXTENT);
 
+    this._mapState.map = this.map;
+
     this._listRuralPropertiesMinimumService.listenClickOnTheMap(
-      this.map,
-      this._unsubscribe$
+      this._unsubscribeClick$.asObservable()
     );
+
+    this._mapState.isDrawing.subscribe((value: boolean) => {
+      if (!value) {
+        this._listRuralPropertiesMinimumService.listenClickOnTheMap(
+          this._unsubscribeClick$.asObservable(),
+          1
+        );
+      } else {
+        this._unsubscribeClick$.next();
+      }
+    });
 
     this._cARSelectedStateService.CAR_minimum$.subscribe(
       (value: RuralPropertyMinimum | null) => {
-        if(this._latestLayerSelected){
+        if (this._latestLayerSelected) {
           this.map?.removeLayer(this._latestLayerSelected);
           this._latestLayerSelected = null;
         }
@@ -141,7 +158,7 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
           const extent = vectorSource.getExtent();
           if (extent) {
             this.map?.getView().fit(extent, {
-              padding: [30, 120, 30, 30],  // Opcional: Adiciona padding para que não fique colado nas bordas
+              padding: [30, 120, 30, 30], // Opcional: Adiciona padding para que não fique colado nas bordas
             });
           }
           this._latestLayerSelected = vectorLayer;
@@ -152,6 +169,8 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._unsubscribe$.next();
+    this._unsubscribeClick$.next();
     this._unsubscribe$.complete();
+    this._unsubscribeClick$.complete();
   }
 }

@@ -70,7 +70,7 @@ export class SideOptionsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((item: WaysToConsultRuralProperty) => {
         this.cARSelectedStateService.update(null);
-        if (item == WaysToConsultRuralProperty.CLICK_MAP) {
+        if (item == WaysToConsultRuralProperty.CLICK_MAP || item == WaysToConsultRuralProperty.DRAW_POLYGON) {
           this.CARFormControl.setValue('ES-', {
             emitEvent: false,
           });

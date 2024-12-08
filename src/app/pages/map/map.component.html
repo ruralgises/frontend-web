@@ -2,10 +2,16 @@
 <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 }
 
-<app-map-view/>
+<app-map-view />
 
-<app-information-guide class="over-map" [hidden]="!sideOptionsIsOpen()" (toClosed)="sideOptionsIsOpen.set(false)"/>
+<app-information-guide
+  class="over-map"
+  [hidden]="!sideOptionsIsOpen()"
+  (toClosed)="closeSideOptions()"
+/>
 
-<app-side-options class="over-map"/>
+<app-side-options class="over-map" />
 
-<app-map-controls class="over-map"/>
+<app-map-controls class="over-map" />
+
+<app-draw-interaction class="over-map" />

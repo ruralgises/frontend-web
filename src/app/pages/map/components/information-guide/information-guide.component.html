@@ -1,7 +1,10 @@
 <ng-container class="height-100">
   <mat-card class="height-100">
     <mat-card-header>
-      <button mat-icon-button id="button-close" (click)="toClosed.emit()">
+      <div id="container-header">
+        <mat-card-title>Relatório</mat-card-title>
+      </div>
+      <button [disabled]="(isLoading$ | async)" mat-icon-button id="button-close" (click)="toClosed.emit()">
         <mat-icon
           aria-hidden="false"
           aria-label="botão para fechar o card de opções"

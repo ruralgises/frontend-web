@@ -5,22 +5,18 @@ import { filter } from 'rxjs/internal/operators/filter';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { RuralPropertyMinimumService } from '../../core/services/rural-property-minimum.service';
 import { RuralPropertyMinimum } from '../../core/models/rural-gis-reponse/RuralPropertyMinimum';
-import {
-  catchError,
-  Observable,
-  of,
-  Subject,
-  takeUntil,
-} from 'rxjs';
+import { catchError, Observable, of, Subject, takeUntil } from 'rxjs';
 import { GeoSpatialInformation } from '../../core/models/rural-gis-reponse/GeoSpatialInformation';
 import { Map, MapBrowserEvent } from 'ol';
 import { unByKey } from 'ol/Observable';
 import { WaysToConsultRuralProperty } from '../../core/enum/ways-to-consult-rural-property.enum';
-import { Point } from 'ol/geom';
+import { Geometry, Point } from 'ol/geom';
+import { MapStateService } from './map-state.service';
 
 @Injectable()
 export class ListRuralPropertiesMinimumService {
   private _ruralPropertyMinimumService = inject(RuralPropertyMinimumService);
+  private _mapSingletonService = inject(MapStateService);
   private _listRuralProperties =
     new Subject<GeoSpatialInformation<RuralPropertyMinimum> | null>();
 
@@ -29,21 +25,41 @@ export class ListRuralPropertiesMinimumService {
   listRuralProperties$ = this._listRuralProperties.asObservable();
   consultationStarted$ = this._consultationStarted.asObservable();
 
-  listenClickOnTheMap(map: Map, unsubscribe$: Observable<void>) {
-    const eventKey = map.on('click', (event: MapBrowserEvent<UIEvent>) => {
-      this._consultationStarted.next(WaysToConsultRuralProperty.CLICK_MAP);
-      const coord = event.coordinate;
-      const point = new Point(coord);
-      this._ruralPropertyMinimumService
-        .getByGeometryRuralPropretiesMinimum(point)
-        .subscribe((x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
-          this._listRuralProperties.next(x);
-        });
-    });
+  listenClickOnTheMap(unsubscribe$: Observable<void>, skip: number = 0) {
+    const eventKey = this._mapSingletonService.map?.on(
+      'click',
+      (event: MapBrowserEvent<UIEvent>) => {
+        if(skip == 0) {
+          this._consultationStarted.next(WaysToConsultRuralProperty.CLICK_MAP);
+          const coord = event.coordinate;
+          const point = new Point(coord);
+          this._ruralPropertyMinimumService
+            .getByGeometryRuralPropretiesMinimum(point)
+            .subscribe(
+              (x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
+                this._listRuralProperties.next(x);
+              }
+            );
+        }else{
+          skip--;
+        }
+      }
+    );
 
-    unsubscribe$.subscribe(() => {
-      unByKey(eventKey);
-    });
+    if (eventKey) {
+      unsubscribe$.subscribe(() => {
+        unByKey(eventKey);
+      });
+    }
+  }
+
+  searchDrawPolygon(geometry: Geometry) {
+    this._consultationStarted.next(WaysToConsultRuralProperty.DRAW_POLYGON);
+    this._ruralPropertyMinimumService
+      .getByGeometryRuralPropretiesMinimum(geometry)
+      .subscribe((x: GeoSpatialInformation<RuralPropertyMinimum> | null) => {
+        this._listRuralProperties.next(x);
+      });
   }
 
   listenToSearchChanges(
@@ -82,4 +98,3 @@ export class ListRuralPropertiesMinimumService {
       });
   }
 }
-
