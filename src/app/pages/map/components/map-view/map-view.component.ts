@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Feature, Map, Tile, View } from 'ol';
+import { Feature, ImageTile, Map, Tile, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import TileWMS from 'ol/source/TileWMS';
@@ -68,6 +68,19 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
               FORMAT: environment.WMSFormat,
               TILDE: true,
             },
+            // Exemplo para casos futuros
+            // tileLoadFunction: (imageTile: any, src) => {
+            //   fetch(src, {
+            //     headers: {
+            //       'ngrok-skip-browser-warning': 'true',
+            //     },
+            //   })
+            //     .then((response) => response.blob())
+            //     .then((blob) => {
+            //       imageTile.getImage().src = URL.createObjectURL(blob);
+            //     });
+            // },
+
           }),
           maxZoom: 9,
         }),
@@ -79,7 +92,7 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
               VERSION: environment.WMSVersion,
               FORMAT: environment.WMSFormat,
               TILDE: true,
-            },
+            }
           }),
           maxZoom: 15,
           minZoom: 9.01,
@@ -92,7 +105,7 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
               VERSION: environment.WMSVersion,
               FORMAT: environment.WMSFormat,
               TILDE: true,
-            },
+            }
           }),
           minZoom: 15.01,
         }),

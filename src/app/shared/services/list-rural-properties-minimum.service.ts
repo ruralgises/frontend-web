@@ -84,13 +84,13 @@ export class ListRuralPropertiesMinimumService {
         filter((term): term is string => term != undefined && term != null),
         debounceTime(300),
         distinctUntilChanged(),
-        switchMap((term: string) => {
+        switchMap((car: string) => {
           this._consultationStarted.next(WaysToConsultRuralProperty.CAR);
-          if (term?.length < 13) {
+          if (car?.length < 13) {
             return of(null);
           }
           return this._ruralPropertyMinimumService
-            .getByCodeRuralPropretiesMinimum(term)
+            .getByCodeRuralPropretiesMinimum(car)
         })
       )
       .subscribe({

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { RuralProperty } from '../models/rural-gis-reponse/RuralProperty';
 import { environment } from '../../../environments/environment';
@@ -11,6 +11,7 @@ import { MesageService } from '../../shared/services/mesage.service';
 export class RuralPropertyService {
   private _http: HttpClient = inject(HttpClient);
   private _mesageService = inject(MesageService);
+  private headers = new HttpHeaders();
 
   getByCodeRuralPropreties(
     code: string,
@@ -30,7 +31,9 @@ export class RuralPropertyService {
 
     return this._http.get<RuralProperty>(
       environment.baseUrl + 'RuralProperties',
-      { params: params }
+      { params: params,
+        headers: this.headers
+      }
     );
   }
 
@@ -41,6 +44,7 @@ export class RuralPropertyService {
       .get(environment.baseUrl + 'RuralProperties/report', {
         params,
         responseType: 'blob',
+        headers: this.headers
       })
       .subscribe({
         next: (response) => {

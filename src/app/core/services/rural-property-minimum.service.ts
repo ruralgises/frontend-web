@@ -18,9 +18,10 @@ export class RuralPropertyMinimumService {
   constructor(private http: HttpClient) {}
 
   private geojsonFormat = new GeoJSON();
-  private header = new HttpHeaders({
-    'Content-Type': 'application/json',
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json'
   });
+
   getByGeometryRuralPropretiesMinimum(
     geometry: Geometry,
     skip?: number,
@@ -41,7 +42,7 @@ export class RuralPropertyMinimumService {
     return this.http.post<GeoSpatialInformation<RuralPropertyMinimum>>(
       environment.baseUrl + 'RuralPropertiesMinimum/bygeometry',
       request,
-      { headers: this.header }
+      { headers: this.headers }
     );
   }
 
@@ -63,7 +64,9 @@ export class RuralPropertyMinimumService {
 
     return this.http.get<GeoSpatialInformation<RuralPropertyMinimum>>(
       environment.baseUrl + 'RuralPropertiesMinimum/bycode',
-      { params: params }
+      { params: params,
+        headers: this.headers
+      }
     );
   }
 }

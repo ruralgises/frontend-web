@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { BehaviorSubject, map } from 'rxjs';
@@ -9,6 +9,7 @@ import { BehaviorSubject, map } from 'rxjs';
 export class LegendService {
   private _http = inject(HttpClient);
   private _params = new HttpParams();
+  private headers = new HttpHeaders();
 
   private _legend = new BehaviorSubject<string | null>(null);
   legend$ = this._legend.asObservable();
@@ -25,6 +26,8 @@ export class LegendService {
     this._params = this._params.set('FORMAT', environment.WMSFormat);
     this._params = this._params.set('group', '');
     this._params = this._params.set('TRANSPARENT', 'true');
+
+    this.headers = this.headers.set('Referrer-Policy', 'no-referrer');
 
     window
       .matchMedia('(prefers-color-scheme: light)')
@@ -47,12 +50,15 @@ export class LegendService {
       .get(environment.baseGeoserver, {
         responseType: 'blob',
         params: this._params,
+        headers: this.headers
       })
       .pipe(
         map((res: Blob) => {
           return URL.createObjectURL(res);
         })
-      ).subscribe((legend) => {
+      )
+      .subscribe((legend) => {
+        console.log('recebido');
         this._legend.next(legend);
       });
   }

@@ -25,7 +25,7 @@ export class DrawInteractionComponent {
     if(this.drawInteraction){
       this._mapState.map?.removeInteraction(this.drawInteraction);
       this._mapState.isDrawing.next(false);
-      this.drawInteraction;
+      this.drawInteraction = null;
     }else{
       this._carSelectedStateService.update(null);
       this.drawInteraction = new Draw({
@@ -40,9 +40,10 @@ export class DrawInteractionComponent {
       // Evento ao finalizar o desenho
       this.drawInteraction.on('drawend', (event) => {
         const feature = event.feature;
+        const geom = feature.getGeometry()!
         if(feature.getGeometry()){
           this._listRuralPropertiesMinimumService.searchDrawPolygon(
-            feature.getGeometry()!
+            geom
           );
         }
         this._mapState.map?.removeInteraction(this.drawInteraction!);

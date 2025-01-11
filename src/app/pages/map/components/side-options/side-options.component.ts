@@ -33,7 +33,6 @@ import { WaysToConsultRuralProperty } from '../../../../core/enum/ways-to-consul
 })
 export class SideOptionsComponent implements OnInit, OnDestroy {
   CARFormControl = new FormControl('ES-', [
-    Validators.required,
     Validators.pattern(/^[A-Z]{2}-\d{7}-[0-9A-F]{2,32}$/),
   ]);
 
@@ -70,7 +69,10 @@ export class SideOptionsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe((item: WaysToConsultRuralProperty) => {
         this.cARSelectedStateService.update(null);
-        if (item == WaysToConsultRuralProperty.CLICK_MAP || item == WaysToConsultRuralProperty.DRAW_POLYGON) {
+        if (
+          item == WaysToConsultRuralProperty.CLICK_MAP ||
+          item == WaysToConsultRuralProperty.DRAW_POLYGON
+        ) {
           this.CARFormControl.setValue('ES-', {
             emitEvent: false,
           });
