@@ -80,7 +80,7 @@ export class ListRuralPropertiesMinimumService {
   ) {
     search$
       .pipe(
-        takeUntil(unsubscribe$),
+        // takeUntil(unsubscribe$),
         filter((term): term is string => term != undefined && term != null),
         debounceTime(300),
         distinctUntilChanged(),
@@ -91,6 +91,14 @@ export class ListRuralPropertiesMinimumService {
           }
           return this._ruralPropertyMinimumService
             .getByCodeRuralPropretiesMinimum(car)
+            .pipe(
+              catchError((error) => {
+                this._msgService.openSnackBar(
+                  'Erro ao consultar as propriedades rurais'
+                );
+                return of(null);
+              })
+            );
         })
       )
       .subscribe({
