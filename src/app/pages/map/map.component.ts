@@ -16,7 +16,7 @@ import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { MapControlsComponent } from './components/map-controls/map-controls.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AsyncPipe } from '@angular/common';
-import { DrawInteractionComponent } from "./components/draw-interaction/draw-interaction.component";
+import { DrawInteractionComponent } from './components/draw-interaction/draw-interaction.component';
 
 @Component({
   selector: 'app-map',
@@ -28,8 +28,8 @@ import { DrawInteractionComponent } from "./components/draw-interaction/draw-int
     MapControlsComponent,
     MatProgressBarModule,
     AsyncPipe,
-    DrawInteractionComponent
-],
+    DrawInteractionComponent,
+  ],
   providers: [
     ListRuralPropertiesMinimumService,
     CARSelectedStateService,
@@ -48,11 +48,11 @@ export class MapComponent implements OnInit, OnDestroy {
   );
   private _cARSelectedStateService = inject(CARSelectedStateService);
   CAR: RuralProperty | null = null;
-  sideOptionsIsOpen = signal(false);
+  informationGuideIsOpen = signal(false);
 
-  closeSideOptions() {
-    this.sideOptionsIsOpen.set(false);
-    this._cARSelectedStateService.update(null)
+  closeInformationGuide() {
+    this.informationGuideIsOpen.set(false);
+    this._cARSelectedStateService.update(null);
   }
 
   ngOnInit(): void {
@@ -60,32 +60,41 @@ export class MapComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe$))
       .subscribe(() => {
         this.showLoading.next(true);
-        if (!this.sideOptionsIsOpen()) {
-          this.sideOptionsIsOpen.set(true);
+        if (!this.informationGuideIsOpen()) {
+          this.informationGuideIsOpen.set(true);
         }
       });
 
     this._cARSelectedStateService.CAR$.pipe(
       takeUntil(this._unsubscribe$)
     ).subscribe((item) => {
-      if(item){
+      if (item) {
         this.showLoading.next(false);
       }
       this.CAR = item;
-      this.sideOptionsIsOpen.set(!!item);
+      this.informationGuideIsOpen.set(!!item);
+
+      if (window.innerWidth <= 600) {
+        // Rola a página 100vw (100% da largura da tela) para baixo
+        window.scrollBy({
+          top: window.innerHeight, // Rola a página para baixo uma vez a altura da tela
+          left: 0,
+          behavior: 'smooth', // Rolagem suave
+        });
+      }
     });
 
-    this._listRuralPropertiesMinimumService.consultationStarted$.pipe(
-      takeUntil(this._unsubscribe$)
-    ).subscribe(() => {
-      this.showLoading.next(true);
-    });
+    this._listRuralPropertiesMinimumService.consultationStarted$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe(() => {
+        this.showLoading.next(true);
+      });
 
-    this._listRuralPropertiesMinimumService.listRuralProperties$.pipe(
-      takeUntil(this._unsubscribe$)
-    ).subscribe((item) => {
-      this.showLoading.next(false);
-    });
+    this._listRuralPropertiesMinimumService.listRuralProperties$
+      .pipe(takeUntil(this._unsubscribe$))
+      .subscribe((item) => {
+        this.showLoading.next(false);
+      });
   }
 
   ngOnDestroy(): void {

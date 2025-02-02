@@ -1,33 +1,63 @@
-.over-map{
-    position: absolute;
-    z-index: 1000;
+.over-map {
+  position: absolute;
+  z-index: 1000;
 }
 
-app-information-guide{
-    top: 0;
+#container-map-and-controls {
+  height: 100vh;
+  position: relative;
+}
+
+app-information-guide {
+  top: 0;
+  right: 0;
+  width: 30vw;
+  height: 95vh;
+  margin: 10px;
+}
+
+#container-options-search {
+  top: 0;
+  left: 0;
+  display: flex;
+}
+
+app-side-options {
+  width: 20vw;
+  max-height: 50vh;
+  margin: 10px;
+}
+
+app-side-options:hover {
+  width: 30vw;
+}
+
+app-map-controls {
+  position: absolute;
+  z-index: 1000;
+  bottom: 0;
+  left: 0;
+  margin: 10px;
+}
+
+@media (max-width: 480px) {
+  #container-options-search {
+    width: 100vw;
+  }
+
+  app-side-options,
+  app-side-options:hover {
+    width: 74vw;
+    min-width: 74vw;
+    max-width: 74vw;
+  }
+
+  #app-information-guide {
+    position: relative;
+    z-index: 0;
+    top: 100;
     right: 0;
-    width: 30vw;
-    height: 95vh;
-    margin: 10px;
-}
-
-app-side-options{
-    top: 0;
-    left: 0;
-    width: 20vw;
-    max-height: 50vh;
-    margin: 10px;
-}
-
-app-map-controls{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 10px;
-}
-
-app-draw-interaction{
-    position: absolute;
-    top: 0;
-    left: 20.5vw;
+    width: 100vw;
+    height: auto;
+  }
 }
