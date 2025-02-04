@@ -34,8 +34,11 @@ export class CARSelectedStateService {
         this._consultationStarted.next();
         this._ruralPropertyService
           .getByCodeRuralPropreties(ruralPropertyMinimum.code)
-          .subscribe((item) => {
-            this._CAR.next(item);
+          .subscribe({
+            next: (item) => {
+              this._CAR.next(item);
+            },
+            error: e => this._CAR.next(null)
           });
       }
     } else {

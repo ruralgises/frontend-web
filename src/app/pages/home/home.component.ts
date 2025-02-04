@@ -18,6 +18,7 @@ import { MesageService } from '../../shared/services/mesage.service';
 import { Subject, takeUntil } from 'rxjs';
 import { CarMaskService } from '../../shared/services/car-mask.service';
 import { ListRuralPropertiesMinimumService } from '../../shared/services/list-rural-properties-minimum.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,7 @@ import { ListRuralPropertiesMinimumService } from '../../shared/services/list-ru
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  CARFormControl = new FormControl('ES-', [
+  CARFormControl = new FormControl(environment.uf +'-', [
     Validators.required,
     Validators.pattern(/^[A-Z]{2}-\d{7}-[0-9A-F]{2,32}$/),
   ]);

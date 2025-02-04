@@ -16,6 +16,7 @@ import { CarMaskService } from '../../../../shared/services/car-mask.service';
 import { GeoSpatialInformation } from '../../../../core/models/rural-gis-reponse/GeoSpatialInformation';
 import { RuralPropertyMinimum } from '../../../../core/models/rural-gis-reponse/RuralPropertyMinimum';
 import { WaysToConsultRuralProperty } from '../../../../core/enum/ways-to-consult-rural-property.enum';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-side-options',
@@ -32,7 +33,7 @@ import { WaysToConsultRuralProperty } from '../../../../core/enum/ways-to-consul
   styleUrl: './side-options.component.scss',
 })
 export class SideOptionsComponent implements OnInit, OnDestroy {
-  CARFormControl = new FormControl('ES-', [
+  CARFormControl = new FormControl(environment.uf + '-', [
     Validators.pattern(/^[A-Z]{2}-\d{7}-[0-9A-F]{2,32}$/),
   ]);
 

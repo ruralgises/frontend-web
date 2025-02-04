@@ -50,10 +50,7 @@ export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    const ES_EXTENT = [
-      -41.8793911540082, -21.2999812200881, -39.6641495558494,
-      -17.8908685478251,
-    ];
+    const ES_EXTENT = environment.es_extent;
 
     this.map = new Map({
       view: new View({ center: [0, 0], zoom: 3, projection: 'EPSG:4674' }),
