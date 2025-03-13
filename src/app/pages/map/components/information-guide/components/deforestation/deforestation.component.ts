@@ -91,7 +91,7 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
         layout: {
           width: 360,
           height: 250,
-          font: { color: 'white' },
+          font: { color: window.matchMedia('(prefers-color-scheme: light)').matches ? 'black' : 'white'},
           plot_bgcolor: 'rgba(0,0,0,0)',
           paper_bgcolor: 'rgba(0,0,0,0)',
           margin: { t: 0, b: 18, l: 20, r: 0 },
@@ -110,7 +110,7 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
   }
 
   private filterYears(years: string[]){
-    if(years.length > 5){
+    if(years.length > 4){
       const firstElement = years[0];
       const middleLeftElement = years[Math.floor(years.length / 4)];
       const middleElement = years[Math.floor(years.length / 2)];
@@ -118,7 +118,7 @@ export class DeforestationComponent implements OnInit, AfterViewInit {
       const lastElement = years[years.length - 1];
 
 
-      return [firstElement, middleLeftElement, middleElement, middleRightElement,  lastElement];
+      return [firstElement, middleElement,  lastElement];
     }
 
     return years;

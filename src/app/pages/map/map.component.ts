@@ -68,9 +68,8 @@ export class MapComponent implements OnInit, OnDestroy {
     this._cARSelectedStateService.CAR$.pipe(
       takeUntil(this._unsubscribe$)
     ).subscribe((item) => {
-      if (item) {
-        this.showLoading.next(false);
-      }
+      this.showLoading.next(false);
+
       this.CAR = item;
       this.informationGuideIsOpen.set(!!item);
 
